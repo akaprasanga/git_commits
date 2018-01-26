@@ -1,12 +1,11 @@
 import requests
-api_token = "390cdc9a8ebd21f56d6f2b5eda79cc261e5788b2"
+api_token = "xxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 url = 'https://api.github.com/graphql'
 json = { "query" : """{ 
 repository(owner:"bitcoin",name:"bitcoin"){
   object(expression:"master"){
     ... on Commit {
-      
       history(first:100 since:"2017-01-18T18:00:00Z"){
         totalCount
         edges{
@@ -19,28 +18,24 @@ repository(owner:"bitcoin",name:"bitcoin"){
             messageHeadline           
           }
         }
-        
-        
       }
     }
   }
+ }  
 }
-    
-  
-
-}
-    
 """ }
 
 headers = {'Authorization': 'token %s' % api_token}
 
 r = requests.post(url=url, json=json, headers=headers)
 reply = r.json()
-print(reply)
-# new = reply['data']
 
-# print(new)
-# print('\n')
-# for each in new['nodes']:
-#   print(each['name'],each['description'])
-#   print('\n')
+#managing jason response
+new = reply['data']['repository']['object']['history']['edges']
+count=0
+for each in new:
+  count = count +1
+  print(count)
+  print(each['node'])
+  print('\n')
+  
